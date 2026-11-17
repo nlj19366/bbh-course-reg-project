@@ -8,7 +8,7 @@ Each run happens in its own subprocess (one with this folder first on sys.path, 
 without), so the two "pulp" modules never meet. The workload uses only files in this
 repo:
   golden   every golden/ case against examples/ and against out_v2/ trees: bip.solve
-  demo     every student in demo/students.json: demo/build_demo.evaluate (every node's
+  demo     every student in demo/students.json: finder.evaluate (every node's
            verdict, the of_which checks that fail, result, unmet)
   sweep    six course lists (fixtures/stars/mock_stars_report.json and five demo
            students) against all programmes in the combined catalogue file: bip.solve
@@ -35,9 +35,8 @@ REPO = PARSER.parent
 
 def workload() -> dict:
     sys.path.insert(0, str(PARSER))
-    sys.path.insert(0, str(PARSER / "demo"))
     import bip
-    import build_demo
+    import finder
     from check_bip import taken_courses
 
     def slots(v) -> int:
@@ -61,11 +60,11 @@ def workload() -> dict:
         cases = {c["student"]: c for c in g["cases"]}
         for s in people:
             courses = cases[s["golden"]]["courses"] if "golden" in s else s["courses"]
-            ev = build_demo.evaluate(by_stem[stem], courses, g.get("default_units", 4))
+            ev = finder.evaluate(by_stem[stem], courses, g.get("default_units", 4))
             out[f"demo|{stem}|{s['name']}"] = [ev["result"], sorted(ev["unmet"]), ev["nodes"], sorted(ev["checks_failed"]),
                                               sum(len(cs) for cs in ev["assignment"].values())]
             if "golden" not in s and len(lists) < 5:
-                lists.append((s["name"], build_demo.taken_courses(courses)))
+                lists.append((s["name"], finder.taken_courses(courses)))
 
     mock = json.loads((REPO / "fixtures" / "stars" / "mock_stars_report.json").read_text(encoding="utf-8"))
     lists.insert(0, ("mock_stars_report", {c["code"]: float(c["units"]) for c in mock["completedCourses"]}))

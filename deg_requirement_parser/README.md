@@ -231,6 +231,7 @@ Change one thing at a time so you can tell what helped. Questions waiting on Vis
 | `out_v2/` | The run behind the combined file: one JSON per programme, `summary.csv` (from `check_results.py`), `run_meta.csv` (model, cost, time) and `run_log.csv` (one row per call; overwritten by each run, so after a re-run it covers only that run). |
 | `catalogue/` | The combined file. |
 | `demo/` | The demo page, its made-up students and the script that precomputes their verdicts. |
+| `finder.py`, `test_finder.py` | Checks one parsed STARS report against the whole catalogue file: the student's own major and minors node by node, and the other programmes ranked by the fewest courses that could finish them. What the finder app runs in the browser. |
 | `pulp_shim/` | A stand-in for PuLP backed by scipy, so `bip.py` can run in the browser. `compare.py` checks it against real PuLP. |
 | `FEEDBACK_phase1.md`, `taxonomy_rewrite_plan.md`, `taxonomy_open_questions.md` | Vishal's feedback with the task list ticked, the rewrite plan, open questions. |
 | `out_sonnet5_40/` | The earlier 40-programme run in the old list format. Kept for comparison only. |

@@ -17,7 +17,7 @@ after `await pyodide.loadPackage("scipy")`.
 
 ## What it supports
 
-Only what `bip.py` and `demo/build_demo.py` use:
+Only what `bip.py` and `finder.py` use:
 - binary `LpVariable`s;
 - `lpSum`, linear expressions, and `<=` / `>=` / `==` constraints;
 - `LpProblem` with `LpMinimize`, and `prob +=` for constraints and the objective;
